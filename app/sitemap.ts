@@ -4,7 +4,7 @@ import { getServices } from "@/lib/cms/queries";
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = "https://safeguardforce.in";
+  const base = "https://www.safeguardforce.online";
   const services = await getServices().catch(() => []);
 
   const staticRoutes = ["", "/about", "/contact", "/industries"].map((p) => ({

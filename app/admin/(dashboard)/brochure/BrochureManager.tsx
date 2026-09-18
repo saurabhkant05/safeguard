@@ -55,9 +55,9 @@ export default function BrochureManager({
   const [description, setDescription] = useState(
     section?.description ||
       section?.subtitle ||
-      "Explore our official 13-page corporate profile covering our 20+ years track record, leadership foreword by Founder & Director Mr. Shashikant Shukla, 30-day training methodologies in Karjat & Gorakhpur, statutory compliance (PASARA License No. 293), and valued client portfolio."
+      "Explore our official corporate profile covering our 20+ years track record, leadership foreword by Founder & Director Mr. Shashikant Shukla, 30-day training methodologies in Karjat & Gorakhpur, statutory compliance (PASARA License No. 293), and valued client portfolio."
   );
-  const [buttonText, setButtonText] = useState(section?.button_text || "View Corporate Profile (13 Pages) →");
+  const [buttonText, setButtonText] = useState(section?.button_text || "View Corporate Profile →");
   const [brochureUrl, setBrochureUrl] = useState(section?.button_url || settings.brochure_url || "/brochure.pdf");
 
   // Highlight Cards State for Homepage Section
@@ -432,7 +432,7 @@ export default function BrochureManager({
                   <img src={settings.logo_url || "/images/safelogo.png"} alt="Logo" className="w-8 h-8 object-contain" />
                   <div>
                     <div className="text-[11px] font-black text-white">SAFE GUARD FORCE</div>
-                    <div className="text-[#C5A253] text-[9px] uppercase font-bold">13-Page Profile</div>
+                    <div className="text-[#C5A253] text-[9px] uppercase font-bold">Official Profile</div>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-[11px] text-white/80">
@@ -548,7 +548,7 @@ export default function BrochureManager({
                   name="button_text"
                   value={buttonText}
                   onChange={(e) => setButtonText(e.target.value)}
-                  placeholder="e.g. View Corporate Profile (13 Pages) →"
+                  placeholder="e.g. View Corporate Profile →"
                   className="w-full border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-[#C5A253]"
                 />
               </div>

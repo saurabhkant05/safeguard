@@ -118,8 +118,8 @@ export default async function HomePage() {
 
         const effectiveTitle = brochureSec?.title || settings.brochure_title || "SAFE Guard FORCE Corporate Brochure";
         const effectiveEyebrow = brochureSec?.eyebrow || "Official Company Document";
-        const effectiveDesc = brochureSec?.subtitle || brochureSec?.description || "Explore our official 13-page corporate profile covering our 20+ years track record, leadership foreword by Founder & Director Mr. Shashikant Shukla, 30-day training methodologies in Karjat & Gorakhpur, statutory compliance (PASARA License No. 293), and valued client portfolio.";
-        const effectiveBtnText = brochureSec?.button_text || "View Corporate Profile (13 Pages) →";
+        const effectiveDesc = brochureSec?.subtitle || brochureSec?.description || "Explore our official corporate profile covering our 20+ years track record, leadership foreword by Founder & Director Mr. Shashikant Shukla, 30-day training methodologies in Karjat & Gorakhpur, statutory compliance (PASARA License No. 293), and valued client portfolio.";
+        const effectiveBtnText = brochureSec?.button_text || "View Corporate Profile →";
         const effectivePdf = brochureSec?.button_url || settings.brochure_url || "/brochure.pdf";
         const highlightItems = (brochureSec?.items && brochureSec.items.length > 0 ? brochureSec.items : [
           { a: "20+ Years", b: "Industry Experience" },
@@ -169,7 +169,7 @@ export default async function HomePage() {
                     <img src={settings.logo_url || "/images/safelogo.png"} alt="Logo" className="w-12 h-12 object-contain" />
                     <div>
                       <div className="text-xs font-black text-white tracking-wider">SAFE GUARD FORCE</div>
-                      <div className="text-[#C5A253] text-[10px] uppercase font-bold">13-Page Corporate Profile</div>
+                      <div className="text-[#C5A253] text-[10px] uppercase font-bold">Official Corporate Profile</div>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-xs text-white/80">
@@ -182,7 +182,7 @@ export default async function HomePage() {
                   </div>
                   <div className="pt-2 text-center">
                     <Link href="/brochure" className="text-xs text-[#C5A253] font-bold hover:underline">
-                      Click to read full 13-page profile online →
+                      Click to read full profile online →
                     </Link>
                   </div>
                 </div>

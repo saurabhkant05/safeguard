@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin", "/admin/login", "/api"],
     },
-    sitemap: "https://safeguardforce.in/sitemap.xml",
+    sitemap: "https://www.safeguardforce.online/sitemap.xml",
   };
 }

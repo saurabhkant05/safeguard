@@ -21,7 +21,7 @@ const inter = Inter({
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   return {
-    metadataBase: new URL("https://safeguardforce.in"),
+    metadataBase: new URL("https://www.safeguardforce.online"),
     title: {
       default: `${settings.site_name} – Your Security. Our Priority. | Integrated Security & Facility Management Mumbai`,
       template: `%s | ${settings.site_name}`,

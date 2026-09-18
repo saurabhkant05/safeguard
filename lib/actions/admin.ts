@@ -198,7 +198,7 @@ export async function saveBrochureSettings(formData: FormData): Promise<Result> 
     const brochureTitle = String(formData.get("brochure_title") || "SAFE Guard FORCE Corporate Brochure").trim();
     const eyebrow = String(formData.get("eyebrow") || "Official Company Document").trim();
     const description = String(formData.get("description") || "").trim();
-    const buttonText = String(formData.get("button_text") || "View Corporate Profile (13 Pages) →").trim();
+    const buttonText = String(formData.get("button_text") || "View Corporate Profile →").trim();
     const brochureEnabled = formData.has("brochure_enabled")
       ? (formData.get("brochure_enabled") === "on" || formData.get("brochure_enabled") === "true")
       : true;
