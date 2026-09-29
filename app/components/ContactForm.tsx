@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Link from "next/link";
 import { submitEnquiry, type SubmitEnquiryResult } from "@/lib/actions/enquiries";
 import { telHref, whatsappHref } from "@/lib/utils";
 import type { ContactSettings, SiteSettings } from "@/types/database";
@@ -149,7 +150,11 @@ export default function ContactForm({
         </button>
 
         <p className="text-slate-400 text-xs leading-relaxed text-center">
-          By submitting, you agree to our Privacy Policy. Investigation services are handled confidentially and lawfully.
+          By submitting, you agree to our{" "}
+          <Link href="/privacy" className="text-slate-600 hover:text-[#C5A253] underline transition">
+            Privacy Policy
+          </Link>
+          . Investigation services are handled confidentially and lawfully.
         </p>
 
         <div className="flex gap-3 pt-2">

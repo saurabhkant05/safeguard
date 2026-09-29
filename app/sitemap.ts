@@ -7,11 +7,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://www.safeguardforce.online";
   const services = await getServices().catch(() => []);
 
-  const staticRoutes = ["", "/about", "/contact", "/industries"].map((p) => ({
-    url: `${base}${p}`,
+  const staticRoutes = [
+    { path: "", priority: 1, changeFrequency: "weekly" as const },
+    { path: "/about", priority: 0.8, changeFrequency: "weekly" as const },
+    { path: "/contact", priority: 0.8, changeFrequency: "weekly" as const },
+    { path: "/industries", priority: 0.8, changeFrequency: "weekly" as const },
+    { path: "/brochure", priority: 0.7, changeFrequency: "weekly" as const },
+    { path: "/privacy", priority: 0.5, changeFrequency: "monthly" as const },
+    { path: "/terms", priority: 0.5, changeFrequency: "monthly" as const },
+    { path: "/disclaimer", priority: 0.5, changeFrequency: "monthly" as const },
+  ].map((r) => ({
+    url: `${base}${r.path}`,
     lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: p === "" ? 1 : 0.8,
+    changeFrequency: r.changeFrequency,
+    priority: r.priority,
   }));
 
   const legacyServiceRoutes = [
