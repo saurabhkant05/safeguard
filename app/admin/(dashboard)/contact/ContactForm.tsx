@@ -102,16 +102,18 @@ export default function ContactForm({ contact }: { contact: ContactSettings | nu
         <legend className="px-2 text-xs font-bold tracking-widest uppercase text-[#0A1931]">Head Office & Map</legend>
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className={label}>Address Line 1</label>
+            <label className={label}>Address Line 1 (Map Image Overlay Badge)</label>
             <input name="addr_line1" defaultValue={addr?.line1} className={input} />
+            <p className="text-[11px] text-slate-400 mt-1">This text appears as the pin overlay badge on the map preview card (e.g. 📍 C 517, Kailash Esplanade).</p>
           </div>
           <div>
             <label className={label}>Address Line 2</label>
             <input name="addr_line2" defaultValue={addr?.line2} className={input} />
           </div>
           <div>
-            <label className={label}>City</label>
+            <label className={label}>City (Heading Above Map Image)</label>
             <input name="addr_city" defaultValue={addr?.city} className={input} />
+            <p className="text-[11px] text-slate-400 mt-1">Shown as the title of the card (e.g. Ghatkopar West, Mumbai).</p>
           </div>
           <div>
             <label className={label}>Pincode</label>
@@ -120,12 +122,14 @@ export default function ContactForm({ contact }: { contact: ContactSettings | nu
         </div>
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className={label}>Google Maps URL</label>
+            <label className={label}>Google Maps URL ("Open in Google Maps" Button)</label>
             <input name="map_url" defaultValue={contact?.map_url} className={input} />
+            <p className="text-[11px] text-slate-400 mt-1">Destination URL when users click &ldquo;Open in Google Maps&rdquo;.</p>
           </div>
           <div>
-            <label className={label}>Map Landmark Note</label>
+            <label className={label}>Map Landmark Note (Subtitle Description)</label>
             <input name="map_note" defaultValue={contact?.map_note} className={input} />
+            <p className="text-[11px] text-slate-400 mt-1">Shown directly under the City heading (e.g. Located opposite Shreyash Cinema on LBS Marg...).</p>
           </div>
         </div>
       </fieldset>

@@ -85,7 +85,7 @@ export default async function ContactPage() {
               <div className="mt-4 h-48 bg-slate-200 relative overflow-hidden">
                 <img src={contact?.map_image_url || "/images/mumbai-business-district.png"} alt="Map" className="w-full h-full object-cover opacity-60" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-[#0A1931] text-white px-4 py-2 text-xs tracking-widest uppercase font-bold shadow-lg">📍 {addr?.line1 || "Kailash Esplanade, LBS Marg"}</div>
+                  <div className="bg-[#0A1931] text-white px-4 py-2 text-xs tracking-widest uppercase font-bold shadow-lg">📍 {addr?.line1 || settings.address_line_1 || "C 517, Kailash Esplanade"}</div>
                 </div>
               </div>
               <a href={contact?.map_url || settings.google_maps_url} target="_blank" rel="noopener noreferrer" className="block mt-3 bg-[#0A1931] text-white text-center py-3 text-xs tracking-[0.16em] uppercase font-bold">Open in Google Maps</a>
