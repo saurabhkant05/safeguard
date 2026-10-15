@@ -93,7 +93,7 @@ export default async function HomePage() {
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0 flex-wrap justify-center">
             <div className="border border-white/15 bg-white/5 px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs tracking-wider uppercase font-bold text-white/90">
-              <strong className="text-[#C5A253]">20+</strong> YEARS EXP
+              <strong className="text-[#C5A253]">30+</strong> YEARS EXP
             </div>
             <div className="border border-white/15 bg-white/5 px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs tracking-wider uppercase font-bold text-white/90">
               <strong className="text-[#C5A253]">PASARA</strong> LIC. 293
@@ -118,11 +118,11 @@ export default async function HomePage() {
 
         const effectiveTitle = brochureSec?.title || settings.brochure_title || "SAFE Guard FORCE Corporate Brochure";
         const effectiveEyebrow = brochureSec?.eyebrow || "Official Company Document";
-        const effectiveDesc = brochureSec?.subtitle || brochureSec?.description || "Explore our official corporate profile covering our 20+ years track record, leadership foreword by Founder & Director Mr. Shashikant Shukla, 30-day training methodologies in Karjat & Gorakhpur, statutory compliance (PASARA License No. 293), and valued client portfolio.";
+        const effectiveDesc = brochureSec?.subtitle || brochureSec?.description || "Explore our official corporate profile covering our 30+ years track record, leadership foreword by Founder & Director Mr. Shashikant Shukla, 30-day training methodologies in Karjat & Gorakhpur, statutory compliance (PASARA License No. 293), and valued client portfolio.";
         const effectiveBtnText = brochureSec?.button_text || "View Corporate Profile →";
         const effectivePdf = brochureSec?.button_url || settings.brochure_url || "/brochure.pdf";
         const highlightItems = (brochureSec?.items && brochureSec.items.length > 0 ? brochureSec.items : [
-          { a: "20+ Years", b: "Industry Experience" },
+          { a: "30+ Years", b: "Industry Experience" },
           { a: "PASARA #293", b: "Maharashtra Police Reg." },
           { a: "2 Centres", b: "Karjat & Gorakhpur Training" },
           { a: "Full Audit", b: "PF, ESIC, GST & PT Compliant" },

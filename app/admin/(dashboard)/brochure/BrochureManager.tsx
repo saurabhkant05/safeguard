@@ -55,7 +55,7 @@ export default function BrochureManager({
   const [description, setDescription] = useState(
     section?.description ||
       section?.subtitle ||
-      "Explore our official corporate profile covering our 20+ years track record, leadership foreword by Founder & Director Mr. Shashikant Shukla, 30-day training methodologies in Karjat & Gorakhpur, statutory compliance (PASARA License No. 293), and valued client portfolio."
+      "Explore our official corporate profile covering our 30+ years track record, leadership foreword by Founder & Director Mr. Shashikant Shukla, 30-day training methodologies in Karjat & Gorakhpur, statutory compliance (PASARA License No. 293), and valued client portfolio."
   );
   const [buttonText, setButtonText] = useState(section?.button_text || "View Corporate Profile →");
   const [brochureUrl, setBrochureUrl] = useState(section?.button_url || settings.brochure_url || "/brochure.pdf");
@@ -64,13 +64,13 @@ export default function BrochureManager({
   const defaultItems = (section?.items && section.items.length > 0
     ? section.items
     : [
-        { a: "20+ Years", b: "Industry Experience" },
+        { a: "30+ Years", b: "Industry Experience" },
         { a: "PASARA #293", b: "Maharashtra Police Reg." },
         { a: "2 Centres", b: "Karjat & Gorakhpur Training" },
         { a: "Full Audit", b: "PF, ESIC, GST & PT Compliant" },
       ]) as Array<{ a?: string; b?: string; title?: string; subtitle?: string }>;
 
-  const [card1A, setCard1A] = useState(defaultItems[0]?.a || defaultItems[0]?.title || "20+ Years");
+  const [card1A, setCard1A] = useState(defaultItems[0]?.a || defaultItems[0]?.title || "30+ Years");
   const [card1B, setCard1B] = useState(defaultItems[0]?.b || defaultItems[0]?.subtitle || "Industry Experience");
   const [card2A, setCard2A] = useState(defaultItems[1]?.a || defaultItems[1]?.title || "PASARA #293");
   const [card2B, setCard2B] = useState(defaultItems[1]?.b || defaultItems[1]?.subtitle || "Maharashtra Police Reg.");
@@ -567,7 +567,7 @@ export default function BrochureManager({
                     name="card_1_a"
                     value={card1A}
                     onChange={(e) => setCard1A(e.target.value)}
-                    placeholder="Stat (e.g. 20+ Years)"
+                    placeholder="Stat (e.g. 30+ Years)"
                     className="w-full border border-slate-200 px-2.5 py-1.5 text-xs font-bold focus:outline-none focus:border-[#C5A253]"
                   />
                   <input

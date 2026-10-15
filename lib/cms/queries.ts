@@ -566,7 +566,7 @@ export const FALLBACK_STATISTICS: Statistic[] = [
   { id: "s-4", label: "Management System", value: "Professional", description: "", context: "hero_bar", sort_order: 3, is_active: true, created_at: "", updated_at: "" },
   { id: "s-5", label: "Integrated Service Categories", value: "12+", description: "", context: "stats_band", sort_order: 4, is_active: true, created_at: "", updated_at: "" },
   { id: "s-6", label: "Client Retention Rate", value: "98%", description: "", context: "stats_band", sort_order: 5, is_active: true, created_at: "", updated_at: "" },
-  { id: "s-7", label: "Years Operational Experience", value: "20+", description: "", context: "stats_band", sort_order: 6, is_active: true, created_at: "", updated_at: "" },
+  { id: "s-7", label: "Years Operational Experience", value: "30+", description: "", context: "stats_band", sort_order: 6, is_active: true, created_at: "", updated_at: "" },
   { id: "s-8", label: "Operations & Emergency Response", value: "24/7", description: "", context: "stats_band", sort_order: 7, is_active: true, created_at: "", updated_at: "" },
 ];
 

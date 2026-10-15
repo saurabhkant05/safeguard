@@ -205,7 +205,7 @@ export async function saveBrochureSettings(formData: FormData): Promise<Result> 
 
     // Build 4 key highlights cards array
     const items = [
-      { a: String(formData.get("card_1_a") || "20+ Years").trim(), b: String(formData.get("card_1_b") || "Industry Experience").trim() },
+      { a: String(formData.get("card_1_a") || "30+ Years").trim(), b: String(formData.get("card_1_b") || "Industry Experience").trim() },
       { a: String(formData.get("card_2_a") || "PASARA #293").trim(), b: String(formData.get("card_2_b") || "Maharashtra Police Reg.").trim() },
       { a: String(formData.get("card_3_a") || "2 Centres").trim(), b: String(formData.get("card_3_b") || "Karjat & Gorakhpur Training").trim() },
       { a: String(formData.get("card_4_a") || "Full Audit").trim(), b: String(formData.get("card_4_b") || "PF, ESIC, GST & PT Compliant").trim() },
