@@ -10,12 +10,13 @@ export type SubmitEnquiryResult =
   | { ok: true; id: string }
   | { ok: false; error: string; fieldErrors?: Record<string, string> };
 
-/** Simple in-memory rate limit: max 3 submissions per IP per 10 minutes. */
-const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT_MAX = 3;
+/** Simple in-memory rate limit: max 20 submissions per IP per 2 minutes. */
+const RATE_LIMIT_WINDOW_MS = 2 * 60 * 1000;
+const RATE_LIMIT_MAX = 20;
 const rateBuckets = new Map<string, number[]>();
 
 function isRateLimited(ip: string): boolean {
+  if (!ip || ip === "unknown" || ip === "127.0.0.1" || ip === "::1") return false;
   const now = Date.now();
   const hits = (rateBuckets.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
   if (hits.length >= RATE_LIMIT_MAX) return true;
@@ -38,6 +39,7 @@ export async function submitEnquiry(
     try {
       const h = await headers();
       ip =
+        h.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() ||
         h.get("x-forwarded-for")?.split(",")[0]?.trim() ||
         h.get("x-real-ip") ||
         "unknown";
@@ -47,7 +49,7 @@ export async function submitEnquiry(
   }
 
   if (isRateLimited(ip)) {
-    return { ok: false, error: "Too many submissions. Please try again later or call us directly." };
+    return { ok: false, error: "Too many submissions. Please wait a moment or call us directly." };
   }
 
   // Sanitize phone number (strip whitespace and hyphens)

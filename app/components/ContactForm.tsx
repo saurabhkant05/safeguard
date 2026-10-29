@@ -22,7 +22,10 @@ export default function ContactForm({
   settings: SiteSettings;
   serviceOptions: string[];
 }) {
+  const [showSuccess, setShowSuccess] = useState(false);
   const [waLink, setWaLink] = useState<string>("");
+  const [formKey, setFormKey] = useState(0);
+
   const [state, formAction, pending] = useActionState<ActionState, FormData>(
     async (_prev, formData) => {
       const payload = {
@@ -40,6 +43,7 @@ export default function ContactForm({
       const res = await submitEnquiry(payload);
 
       if (res.ok) {
+        setShowSuccess(true);
         const targetNumber = (settings.whatsapp_number || "917977179807").replace(/\D/g, "");
         const cleanNumber = targetNumber.length === 10 ? `91${targetNumber}` : targetNumber;
 
@@ -66,6 +70,8 @@ export default function ContactForm({
             // Popup blocker might intercept; user can click the button on thank-you screen
           }
         }
+      } else {
+        setShowSuccess(false);
       }
 
       return res;
@@ -73,9 +79,7 @@ export default function ContactForm({
     null,
   );
 
-  const [formKey, setFormKey] = useState(0);
-
-  if (state?.ok) {
+  if (showSuccess && state?.ok) {
     return (
       <div className="border border-slate-200 bg-white shadow-[0_8px_32px_rgba(0,0,0,0.06)]">
         <div className="bg-[#0A1931] px-8 py-6">
@@ -109,8 +113,13 @@ export default function ContactForm({
           <div className="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
             <a href={telHref(settings.primary_phone)} className="bg-[#0A1931] text-white px-6 py-3 text-xs tracking-[0.14em] uppercase font-bold">Call {settings.primary_phone}</a>
             <button
-              onClick={() => { setFormKey((k) => k + 1); setWaLink(""); }}
-              className="border border-slate-300 px-6 py-3 text-xs tracking-[0.14em] uppercase font-bold text-[#0A1931]"
+              type="button"
+              onClick={() => {
+                setShowSuccess(false);
+                setWaLink("");
+                setFormKey((k) => k + 1);
+              }}
+              className="border border-slate-300 px-6 py-3 text-xs tracking-[0.14em] uppercase font-bold text-[#0A1931] hover:bg-slate-50 transition cursor-pointer"
             >
               Submit Another Enquiry
             </button>
@@ -120,7 +129,7 @@ export default function ContactForm({
     );
   }
 
-  const fieldError = (name: string) => state && !state.ok ? state.fieldErrors?.[name] : undefined;
+  const fieldError = (name: string) => (!showSuccess && state && !state.ok ? state.fieldErrors?.[name] : undefined);
 
   return (
     <div className="border border-slate-200 bg-white shadow-[0_8px_32px_rgba(0,0,0,0.06)]" key={formKey}>
@@ -133,7 +142,7 @@ export default function ContactForm({
         {/* Honeypot — hidden from humans */}
         <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
-        {state && !state.ok && !state.fieldErrors && (
+        {state && !state.ok && !state.fieldErrors && !showSuccess && (
           <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3">{state.error}</div>
         )}
 
