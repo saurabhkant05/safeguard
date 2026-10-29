@@ -22,6 +22,7 @@ export default function ContactForm({
   settings: SiteSettings;
   serviceOptions: string[];
 }) {
+  const [waLink, setWaLink] = useState<string>("");
   const [state, formAction, pending] = useActionState<ActionState, FormData>(
     async (_prev, formData) => {
       const payload = {
@@ -35,7 +36,39 @@ export default function ContactForm({
         message: String(formData.get("message") ?? ""),
         website: String(formData.get("website") ?? ""),
       };
-      return submitEnquiry(payload);
+
+      const res = await submitEnquiry(payload);
+
+      if (res.ok) {
+        const targetNumber = (settings.whatsapp_number || "917977179807").replace(/\D/g, "");
+        const cleanNumber = targetNumber.length === 10 ? `91${targetNumber}` : targetNumber;
+
+        const lines = [
+          `*New Consultation Request — SAFE Guard FORCE*`,
+          `*Full Name:* ${payload.full_name}`,
+          `*Phone:* ${payload.phone}`,
+          `*Service Required:* ${payload.service_required}`,
+        ];
+        if (payload.company_name) lines.push(`*Company / Society:* ${payload.company_name}`);
+        if (payload.location) lines.push(`*Location:* ${payload.location}`);
+        if (payload.property_type) lines.push(`*Property Type:* ${payload.property_type}`);
+        if (payload.email) lines.push(`*Email:* ${payload.email}`);
+        if (payload.message) lines.push(`*Message:* ${payload.message}`);
+
+        const text = lines.join("\n");
+        const url = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`;
+        setWaLink(url);
+
+        if (typeof window !== "undefined") {
+          try {
+            window.open(url, "_blank");
+          } catch {
+            // Popup blocker might intercept; user can click the button on thank-you screen
+          }
+        }
+      }
+
+      return res;
     },
     null,
   );
@@ -53,13 +86,30 @@ export default function ContactForm({
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
           </div>
           <h3 className="text-[#0A1931] font-black text-xl">Thank you — your enquiry has been received.</h3>
-          <p className="text-slate-500 text-sm leading-relaxed mt-3 max-w-[420px] mx-auto">
-            Our team will contact you shortly. For urgent requirements, call us at {settings.primary_phone} — available {contact?.assistance_hours || "24/7"}.
+          <p className="text-slate-600 text-sm leading-relaxed mt-3 max-w-[460px] mx-auto">
+            Your consultation request is logged in our system. We have also opened WhatsApp to send your request directly to our team at <strong>+91 7977179807</strong>.
           </p>
+
+          {waLink && (
+            <div className="mt-6 mb-2">
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#20ba5a] text-white px-7 py-3.5 text-xs tracking-[0.14em] uppercase font-bold transition shadow-sm rounded"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                </svg>
+                Continue to WhatsApp (+91 7977179807)
+              </a>
+            </div>
+          )}
+
           <div className="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
             <a href={telHref(settings.primary_phone)} className="bg-[#0A1931] text-white px-6 py-3 text-xs tracking-[0.14em] uppercase font-bold">Call {settings.primary_phone}</a>
             <button
-              onClick={() => { setFormKey((k) => k + 1); }}
+              onClick={() => { setFormKey((k) => k + 1); setWaLink(""); }}
               className="border border-slate-300 px-6 py-3 text-xs tracking-[0.14em] uppercase font-bold text-[#0A1931]"
             >
               Submit Another Enquiry
