@@ -52,10 +52,17 @@ export async function submitEnquiry(
     return { ok: false, error: "Too many submissions. Please wait a moment or call us directly." };
   }
 
-  // Sanitize phone number (strip whitespace and hyphens)
+  // Sanitize phone number (strip all non-digits, and normalize +91 / 0 if 12 / 11 digits)
+  let cleanPhone = String(input.phone ?? "").replace(/\D/g, "");
+  if (cleanPhone.length === 12 && cleanPhone.startsWith("91")) {
+    cleanPhone = cleanPhone.slice(2);
+  } else if (cleanPhone.length === 11 && cleanPhone.startsWith("0")) {
+    cleanPhone = cleanPhone.slice(1);
+  }
+
   const sanitizedInput = {
     ...input,
-    phone: String(input.phone ?? "").replace(/[\s-]/g, ""),
+    phone: cleanPhone,
   };
 
   const parsed = enquirySchema.safeParse(sanitizedInput);

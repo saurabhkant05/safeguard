@@ -28,9 +28,37 @@ export default function ContactForm({
 
   const [state, formAction, pending] = useActionState<ActionState, FormData>(
     async (_prev, formData) => {
+      const rawPhone = String(formData.get("phone") ?? "").trim();
+      let cleanPhone = rawPhone.replace(/\D/g, "");
+      if (cleanPhone.length === 12 && cleanPhone.startsWith("91")) {
+        cleanPhone = cleanPhone.slice(2);
+      } else if (cleanPhone.length === 11 && cleanPhone.startsWith("0")) {
+        cleanPhone = cleanPhone.slice(1);
+      }
+
+      if (cleanPhone.length !== 10) {
+        return {
+          ok: false,
+          error: "Mobile number must be exactly 10 digits.",
+          fieldErrors: {
+            phone: "Mobile number must be exactly 10 digits",
+          },
+        };
+      }
+
+      if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
+        return {
+          ok: false,
+          error: "Please enter a valid 10-digit mobile number.",
+          fieldErrors: {
+            phone: "Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9",
+          },
+        };
+      }
+
       const payload = {
         full_name: String(formData.get("full_name") ?? ""),
-        phone: String(formData.get("phone") ?? ""),
+        phone: cleanPhone,
         email: String(formData.get("email") ?? ""),
         company_name: String(formData.get("company_name") ?? ""),
         location: String(formData.get("location") ?? ""),
@@ -153,8 +181,20 @@ export default function ContactForm({
             {fieldError("full_name") && <p className={errorCls}>{fieldError("full_name")}</p>}
           </div>
           <div>
-            <label htmlFor="cf-phone" className={labelCls}>Phone Number *</label>
-            <input id="cf-phone" name="phone" required type="tel" inputMode="tel" placeholder="93235 81437" className={inputCls} />
+            <label htmlFor="cf-phone" className={labelCls}>Phone Number (10 Digits) *</label>
+            <input
+              id="cf-phone"
+              name="phone"
+              required
+              type="tel"
+              inputMode="numeric"
+              maxLength={10}
+              placeholder="10-digit mobile number"
+              onInput={(e) => {
+                e.currentTarget.value = e.currentTarget.value.replace(/\D/g, "").slice(0, 10);
+              }}
+              className={inputCls}
+            />
             {fieldError("phone") && <p className={errorCls}>{fieldError("phone")}</p>}
           </div>
         </div>

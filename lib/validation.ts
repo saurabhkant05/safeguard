@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-/** Indian phone: 10 digits starting 6-9, optionally +91 / 0 prefixed. */
-const phoneRegex = /^(\+?91[-\s]?|0)?[6-9]\d{9}$/;
+/** Indian mobile phone: exactly 10 digits starting with 6, 7, 8, or 9. */
+const phoneRegex = /^[6-9]\d{9}$/;
 
 export const enquirySchema = z.object({
   full_name: z
@@ -12,7 +12,12 @@ export const enquirySchema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(phoneRegex, "Please enter a valid Indian phone number"),
+    .refine((val) => val.replace(/\D/g, "").length === 10, {
+      message: "Mobile number must be exactly 10 digits",
+    })
+    .refine((val) => phoneRegex.test(val.replace(/\D/g, "")), {
+      message: "Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9",
+    }),
   email: z
     .string()
     .trim()
